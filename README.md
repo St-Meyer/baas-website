@@ -2,7 +2,12 @@ BAAS Website
 ======
 
 A simple web frontend for the BAAS project API. Currently it is only
-meant for debugging purposes
+meant for debugging purposes.
+
+```bash
+npm install
+npm start
+```
 
 LICENSE
 ======

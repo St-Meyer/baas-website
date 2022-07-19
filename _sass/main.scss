@@ -1,0 +1,72 @@
+@charset "utf-8";
+
+// Customization
+
+// You can easily customize Bulma with your own variables.
+// Just uncomment the following block to see the result.
+
+/*
+// 1. Import the initial variables
+@import "../node_modules/bulma/sass/utilities/initial-variables";
+@import '../node_modules/bulma-fab-button/src/bulma-fab-button.sass';
+
+// 2. Set your own initial variables
+// Update the blue shade, used for links
+$blue: #06bcef;
+// Add pink and its invert
+$pink: #ff8080;
+$pink-invert: #fff;
+// Update the sans-serif font family
+$family-sans-serif: "Helvetica", "Arial", sans-serif;
+
+// 3. Set the derived variables
+// Use the new pink as the primary color
+$primary: $pink;
+$primary-invert: $pink-invert;
+
+// 4. Import the rest of Bulma
+*/
+
+$fa-font-path: "../_static/fontawesome/webfonts";
+
+@import "../node_modules/bulma/bulma";
+@import "../node_modules/bulma-fab-button/src/bulma-fab-button.sass";
+@import "../_static/fontawesome/scss/fontawesome.scss";
+@import "../_static/fontawesome/scss/brands.scss";
+@import "../_static/fontawesome/scss/solid.scss";
+
+#login-screen {
+	background-color: $red;
+}
+
+#login-placing {
+	margin-top: 30%;
+	background-color: $red;
+}
+
+nav {
+	flex: 1;
+}
+main {
+	flex: 1;
+}
+
+#app {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+footer {
+	margin-top: auto;
+}
+
+body {
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+}
+html {
+	
+}
