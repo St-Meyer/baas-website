@@ -27,13 +27,13 @@ $primary-invert: $pink-invert;
 // 4. Import the rest of Bulma
 */
 
-$fa-font-path: "../_static/fontawesome/webfonts";
+$fa-font-path: "../fontawesome/webfonts";
 
 @import "../node_modules/bulma/bulma";
 @import "../node_modules/bulma-fab-button/src/bulma-fab-button.sass";
-@import "../_static/fontawesome/scss/fontawesome.scss";
-@import "../_static/fontawesome/scss/brands.scss";
-@import "../_static/fontawesome/scss/solid.scss";
+@import "../static/fontawesome/scss/fontawesome.scss";
+@import "../static/fontawesome/scss/brands.scss";
+@import "../static/fontawesome/scss/solid.scss";
 
 #login-screen {
 	background-color: $red;

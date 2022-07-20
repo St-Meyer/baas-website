@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html id="login-screen">
+  <head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,
+								   initial-scale=1">
+	<link rel="stylesheet" href="../css/main.css">
+  </head>
+  <body>
+	<div class="columns is-mobile is-centered is-vcentered" id="login-placing">
+	  <div class="box column is-three-quarters" id="login-box">
+		<span class="mr-1 ml-1 is-centered">
+		  <h4 class="title is-4">Login</h4>
+		  <p>Sign into the BAAS project instance by using your
+			credentials. At first sign-in using a new method creates a new
+			account on the server. Linking accounts together can be done
+			by contacting administration of this BAAS instance.</p>
+		</span>
+
+		<div class="field">
+		  <label class="label">Token</label>
+		  <div class="control">
+			<input class="input" type="text" id="oauth-token">
+		  </div>
+		</div>
+		<div class="field">
+		  <button class="button is-info" type="submit">Login</button>
+		</div>
+		<br>
+
+		<div class="buttons is-centered">
+		  <button class="button is-dark" onclick="getLoginToken()">
+			<span class="icon">
+			  <i class="fab fa-github"></i>
+			</span>
+			<span>Login using Github</span>
+		  </button>
+		  <button class="button is-info">Login using TU Delft</button>
+		  <button class="button is-warning">
+			<span class="icon">
+			  <i class="fab fa-google"></i>
+			</span>
+			<span>Login using Google</span>
+		  </button>
+		</div>
+	  </div>
+	</div>
+	<script type='text/javascript' src='../_javascript/zepto.js'></script>
+	<script type='text/javascript' src='../_javascript/login.js'></script>
+  </body>
+  
+</html>
