@@ -123,6 +123,7 @@ function getNewImage(image) {
 		<label class="label">Checksum</label>
 		<span id="image-checksum" class="has-text-dark">${image.Checksum}</span>
         <label class="label">Versions</label>
+
         <div class="dropdown" onclick="toggleDropdown(event, this);">
           <div class="dropdown-trigger">
             <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
@@ -140,13 +141,24 @@ function getNewImage(image) {
 		</div>
 	  </div>
       <footer class="card-footer">
-		<a href="#" class="card-footer-item" onclick="launchImage(this);">Launch</a>
-		<a href="#" class="card-footer-item" onclick="editImage(this);">Edit</a>
-		<a href="#" class="card-footer-item" onclick="deleteImage(this);">Delete</a>
+        <div class="columns is-multiline">
+          <div class="column">
+             <a href="#" class="card-footer-item" onclick="downloadImage(this);">Download</a>
+          </div>
+          <div class="column">
+		     <a href="#" class="card-footer-item" onclick="deleteImage(this);">Delete</a>
+          </div>
+          <div class="column">
+             <a href="#" class="card-footer-item" onclick="launchImage(this);">Launch</a>
+          </div>
+          <div class="column">
+             <a href="#" class="card-footer-item" onclick="uploadImage(this);">Upload</a>
+          </div>
+        </div>
       </footer>
 	</div>
 </div>
-`
+	`
 	return new_image;
 }
 
@@ -191,6 +203,13 @@ function findChild(parent, className) {
 	return Array.from(parent.children).find(x => x.classList.contains(className));
 }
 
+function findParent(object, target) {
+	let parent = object;
+	while (!parent.classList.contains(target)) {
+		parent = parent.parentElement;
+	}
+	return parent;
+}
 function activateDropdownItem(event, item) {
 	event.stopPropagation();
 
@@ -205,9 +224,7 @@ function activateDropdownItem(event, item) {
 	item.classList.toggle('is-active');
 
 	// Close the dropdown menu
-	while (!parent.classList.contains('is-active')) {
-		parent = parent.parentElement;
-	}
+	parent = findParent(parent, "is-active");
 	parent.classList.remove('is-active');
 
 	// Set the current version as the button text
@@ -221,9 +238,98 @@ function toggleDropdown(event, menu) {
 	event.stopPropagation();
 	closeDropdowns();
 	menu.classList.toggle('is-active');
-	
 }
 
+function getImageAndVersion(imageCard) {
+	let card = findParent(imageCard, "card-content")
+	let content = findChild(card, "content");
+	let uuid = Array.from(content.children).find(x => x.id == "image-uuid").textContent;
+
+	var version = content;
+	["dropdown", "dropdown-trigger", "button", "image-name"].forEach(x =>
+		version = findChild(version, x)
+	);
+	
+	return {UUID: uuid, Version: version.textContent};
+}
+
+function downloadImage(imageCard) {
+	let image = getImageAndVersion(imageCard);
+	let link = document.createElement("a");
+	
+    link.download = `${image.UUID}-${image.Version}.img`;
+    link.href = `http://localhost:4848/${username}/image/${image.UUID}/${image.Version}`;
+	link.target = "_self";
+	document.body.appendChild(link);
+    link.click();
+	link.remove();
+}
+
+function uploadImage(imageCard) {
+	let image = getImageAndVersion(imageCard);
+	
+	return new Promise(resolve => {
+		let upload = document.createElement("input");
+		upload.type="file";
+		
+		upload.onchange = () => {
+			const formData = new FormData();
+
+			// Why????
+			formData.append("newVersion", "true");
+			formData.append("file", upload.files[0]);
+
+			$.ajax({
+				type: "POST",
+				enctype: 'multipart/form-data',
+				url: `http://localhost:4848/${username}/image/${image.UUID}`,
+				data: formData,
+				processData: false,
+				contentType: false,
+				cache: false,
+				xhrFields: {
+					withCredentials: true
+				},
+				crossDomain: true,
+				timeout: -1,
+				success: x => {
+					// Get the version from the human-readable string
+					let version = x.slice(29);
+					let content = findParent(imageCard, "card-content");
+					var dropdown = content;
+
+					// Find the right elements in DOM
+					["content", "dropdown"].forEach(x => dropdown = findChild(dropdown, x));
+					var imageName = dropdown;
+					["dropdown-trigger", "button", "image-name"].forEach(x => imageName = findChild(imageName, x));
+					imageName.textContent = version;
+					let dContent = dropdown;
+					["dropdown-menu", "dropdown-content"].forEach(x => dContent = findChild(dContent, x));
+
+					// Delete the active bit from the last element
+					Array.from(dContent.children).at(-1).classList.remove("is-active");
+					
+					// Create a new version element
+					let versionElement = document.createElement("a")
+					versionElement.onclick = "activateDropdownItem(event, this)";
+					versionElement.classList.add("dropdown-item");
+					versionElement.classList.add("is-active");
+					versionElement.textContent = version;
+					versionElement.href = "#";
+
+					// Add to the list of versions
+					dContent.append(versionElement);
+					
+					console.log(dContent);
+				},
+				error: e => console.log("Failed to upload image: " + e.responseText)
+			});
+		}
+
+		upload.click();
+	});
+	console.log(image);
+}
 
 document.addEventListener('DOMContentLoaded', () => {
 	getUserInfo();
