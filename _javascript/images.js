@@ -57,7 +57,10 @@ function getNewImage(image) {
 	</div>
 </div>
 	`
-	return new_image;
+
+	var temp = document.createElement('div');
+	temp.innerHTML = new_image;
+	return temp.children[0];
 }
 
 function addImage() {
@@ -82,13 +85,11 @@ function deleteImage() {
 
 }
 function getImages() {
-	let images = $("#images-list");
-
-	console.log(username);
+	let images = document.getElementById("images-list");
+	
 	sendMessage(`/user/${username}/images`, "GET", (data) => {
-		data.forEach((image) => {
-			images.append(getNewImage(image));
-		});
+		// Delete all the images that are already there
+		images.replaceChildren(...data.map(getNewImage));
 	});
 }
 
@@ -172,8 +173,6 @@ function uploadImage(imageCard) {
 
 					// Add to the list of versions
 					dContent.append(versionElement);
-					
-					console.log(dContent);
 				},
 				error: e => console.log("Failed to upload image: " + e.responseText)
 			});

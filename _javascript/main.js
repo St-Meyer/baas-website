@@ -17,7 +17,6 @@ function closeAllModals() {
 
 // Add a click event on buttons to open a specific modal
 (document.querySelectorAll('.add-new-image-modal-trigger') || []).forEach(($trigger) => {
-	console.log("test");
     const modal = $trigger.dataset.target;
     const $target = document.getElementById(modal);
 
@@ -41,6 +40,9 @@ document.addEventListener('keydown', (event) => {
 
     if (e.keyCode === 27) { // Escape key
 		closeAllModals();
+		$(".navbar-burger").removeClass("is-active");
+		$(".navbar-menu").removeClass("is-active");
+	
     }
 });
 
@@ -68,7 +70,6 @@ document.addEventListener('keydown', function (event) {
 });
 
 function sendMessageData(uri, type, data, callback) {
-	console.log(JSON.stringify(data));
 	$.ajax({
 		url: "http://localhost:4848" + uri,
 		dataType: 'json',
@@ -143,6 +144,34 @@ function toggleDropdown(event, menu) {
 	menu.classList.toggle('is-active');
 }
 
+function toggleNavBar() {
+	// Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+    $(".navbar-burger").toggleClass("is-active");
+    $(".navbar-menu").toggleClass("is-active");
+}
+
+
+function closeWindows() {
+	$(".window").forEach(x => x.hidden = true);
+}
 document.addEventListener('DOMContentLoaded', () => {
+	// Check for click events on the navbar burger icon
+	$(".navbar-burger").click(toggleNavBar);
+	
+	$(".navbar-item").click(item => {
+		toggleNavBar();
+		closeWindows();
+		let target = document.getElementById(item.target.dataset.target);
+		if (target === undefined || target === null)
+			return;
+		
+		target.hidden = false
+
+		// The only reason that this is okay is because JS itself is an
+		// arbitrary code execution exploit
+		if (target.dataset.onshow!== undefined)
+			eval(target.dataset.onshow);
+	});
+	
 	getUserInfo();
 });
