@@ -12,18 +12,19 @@ function getNewImage(image) {
   <div class="card image-card">
     <div class="card-content">
       <p class="title" id="#image-id">${image.Name}</p>
+      <hr>
 	  <div class="content" onclick="toggleDropdown(event, this);">
   	    <label class="label">UUID</label>
-		<span id="image-uuid" class="has-text-dark">${image.UUID}</span>
+		<span id="image-uuid" class="has-text-dark modal-field">${image.UUID}</span>
 		<label class="label">Disk Compression</label>
-		<span id="image-disk-compression" class="has-text-dark">${image.DiskCompressionStrategy}</span>
+		<span id="image-disk-compression" class="has-text-dark modal-field">${image.DiskCompressionStrategy}</span>
 		<label class="label">Image Filetype</label>
-		<span id="image-disk-filetype" class="has-text-dark">${image.ImageFileType}</span>
+		<span id="image-disk-filetype" class="has-text-dark modal-field">${image.ImageFileType}</span>
 		<label class="label">Type</label>
-		<span id="image-type" class="has-text-dark">${image.Type}</span>
+		<span id="image-type" class="has-text-dark modal-field">${image.Type}</span>
 		<label class="label">Checksum</label>
-		<span id="image-checksum" class="has-text-dark">${image.Checksum}</span>
-        <label class="label">Versions</label>
+		<span id="image-checksum" class="has-text-dark modal-field">${image.Checksum}</span>
+        <label class="label ">Versions</label>
 
         <div class="dropdown" onclick="toggleDropdown(event, this);">
           <div class="dropdown-trigger">
@@ -74,8 +75,8 @@ function addImage() {
 	};
 
 	let input = confirm("Are you sure?");
-	if (! input)
-		return;
+	if (! input) return;
+	
 	sendMessageData(`/user/${username}/image`, "POST", image, data => {
 		$("#images-list").append(getNewImage(data));
 	});

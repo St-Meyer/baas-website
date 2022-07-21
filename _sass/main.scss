@@ -70,3 +70,29 @@ body {
 html {
 	
 }
+
+.card-content .title {
+	margin-bottom: 0.75rem !important;
+}
+
+.card-content hr  {
+	margin-bottom: 0.75rem !important;
+	margin-top: 0.75rem !important;
+}
+
+.content label {
+	margin-bottom: 0px !important;
+}
+
+.content .modal-field {
+	padding-bottom: 1rem !important;
+}
+
+.modal-card-body span {
+	margin-top: 0.5rem !important;
+	margin-bottom: 0px !important;
+}
+
+.modal-card-body input:not(:first-chil) {
+	margin-top: 0.5rem !important;
+}

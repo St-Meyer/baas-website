@@ -102,8 +102,8 @@ function getOption(id) {
 	return $(id)[0].selectedOptions[0].value;
 }
 
-function findChild(parent, className) {
-	return Array.from(parent.children).find(x => x.classList.contains(className));
+function findChild(parent, name) {
+	return Array.from(parent.children).find(x => x.classList.contains(name) || x.id === name);
 }
 
 function findParent(object, target) {
