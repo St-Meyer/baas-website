@@ -33,10 +33,7 @@ function getNewMachine(machine) {
 			</div>
 		</div>
 `
-
-	let temp = document.createElement('div');
-	temp.innerHTML = newMachine;
-	return temp.children[0];
+	return convertText(newMachine);
 }
 
 function getMachines() {

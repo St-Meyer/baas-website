@@ -7,7 +7,7 @@ function getVersion(versions) {
 }
 
 function getNewImage(image) {
-	const new_image = `
+	const newImage = `
 <div class="column is-one-quarter">
   <div class="card image-card">
     <div class="card-content">
@@ -58,10 +58,7 @@ function getNewImage(image) {
 	</div>
 </div>
 	`
-
-	var temp = document.createElement('div');
-	temp.innerHTML = new_image;
-	return temp.children[0];
+	return convertText(newImage);
 }
 
 function addImage() {

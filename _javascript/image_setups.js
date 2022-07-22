@@ -109,10 +109,7 @@ function getImageSetup (imageSetup) {
 		</div>
 	</div>
 </div>`;
-
-	let temp = document.createElement('div');
-	temp.innerHTML = htmlText;
-	return temp.children[0];
+	return convertText(htmlText);
 }
 
 function getImageSetups() {
@@ -209,10 +206,7 @@ function getImageAddItem(image) {
 	</div>
 	<hr>
 </div> `;
-
-	const temp = document.createElement("a");
-	temp.innerHTML = newImageItem;
-	return temp.children[0];
+	return convertText(newImageItem);
 }
 
 function addImageToSetup(event) {
