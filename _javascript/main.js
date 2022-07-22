@@ -102,7 +102,22 @@ function getOption(id) {
 	return $(id)[0].selectedOptions[0].value;
 }
 
+function recurseChild(parent, name) {
+	let children = Array.from(parent.children);
+	let found = children.find(x => x.classList.contains(name) || x.id === name);
+
+	if (children.length === 0)
+		return []
+	
+	if (found === undefined) {
+		return children.map(child => recurseChild(child, name)).flat()[0];
+	} else {
+		return found;
+	}
+}
+
 function findChild(parent, name) {
+	if (parent === undefined || parent === null) return undefined;
 	return Array.from(parent.children).find(x => x.classList.contains(name) || x.id === name);
 }
 
@@ -154,6 +169,25 @@ function toggleNavBar() {
 function closeWindows() {
 	$(".window").forEach(x => x.hidden = true);
 }
+
+function toggleChevron(icon) {
+	let list = icon.classList;
+	if (list.contains("fa-chevron-up")) {
+		list.remove("fa-chevron-up");
+		list.add("fa-chevron-down");
+	} else {
+		
+		list.remove("fa-chevron-down");
+		list.add("fa-chevron-up");
+	}
+}
+
+function convertText(code) {
+	let temp = document.createElement("a");
+	temp.innerHTML = code;
+	return temp.children[0];
+}
+
 document.addEventListener('DOMContentLoaded', () => {
 	// Check for click events on the navbar burger icon
 	$(".navbar-burger").click(toggleNavBar);
@@ -169,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		// The only reason that this is okay is because JS itself is an
 		// arbitrary code execution exploit
-		if (target.dataset.onshow!== undefined)
+		if (target.dataset.onshow !== undefined)
 			eval(target.dataset.onshow);
 	});
 	

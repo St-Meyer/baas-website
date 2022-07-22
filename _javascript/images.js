@@ -8,7 +8,7 @@ function getVersion(versions) {
 
 function getNewImage(image) {
 	const new_image = `
-<div class="column is-one-third">
+<div class="column is-one-quarter">
   <div class="card image-card">
     <div class="card-content">
       <p class="title" id="#image-id">${image.Name}</p>

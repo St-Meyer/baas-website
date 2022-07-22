@@ -1,0 +1,183 @@
+<div id="image-setups-window" class="window" data-onshow="getImageSetups()" hidden="true">
+	<section class="hero is-light">
+		<div class="hero-body">
+			<p class="title">Image Setups</p>
+			<p class="subtitle">Various image setups connected to the user</p>
+		</div>
+	</section>
+	
+	<div class="columns is-centered mt-3 is-3 is-multiline" id="image-setup-list">
+		<div class="column is-one-third">
+			<div class="card">
+				<div class="card-content">
+					<div class="title" autocorrect=off autocomplete=off
+						 contentEditable=true id="#machine-id">Image Setup</div>
+					<hr>
+					<div class="content">
+						<label class="label">Name</label>
+						<span id="image-setup-name" class="has-text-dark modal-field">Valentijn</span>
+						<label class="label">Images
+							<span class="icon" onclick="expandImages(this)">
+								<i class="fas fa-chevron-up mu-3"></i>
+							</span>
+						</label>
+						<div class="setup-image-box">
+							<div class="tabs setup-image-box-select">
+								<li class="is-active"><a onclick="switchImageBox(this);">Simple</a></li>
+								<li><a onclick="switchImageBox(this);">Detailed</a></li>
+							</div>
+							
+							<div class="table-container image-box-table" hidden="true">
+								<table class="table is-small">
+									<thead>
+										<tr>
+											<th>Name</th>
+											<th>Type</th>
+											<th>UUID</th>
+											<th>Version</th>
+											<th>Update</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>Hello World</td>
+											<td>Base</td>
+											<td>DE:AD:BE:EF</td>
+											<td>0</td>
+											<td>False</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<ul class="name-list fa-ul" style="list-style: none;">
+								<li><span class="fa-li"><i class="fa-solid fa-desktop"></i></span>Hello</li>
+								<li><span class="fa-li"><i class="fa-solid fa-hourglass"></i></span>World</li>
+								<li><span class="fa-li"><i class="fa-solid fa-circle-user"></i></span>Program</li>
+								<li><span class="fa-li"><i class="fa-solid fa-archive" ></i></span>!</li>
+							</ul>
+						</div>
+						<label class="label">User</label>
+						<span id="image-setup-username" class="has-text-dark modal-field">Valentijn</span>
+						<label class="label">UUID</label>
+						<span id="image-setup-uuid" class="has-text-dark modal-field">UUID</span>
+					</div>
+					<footer class="card-footer">
+						<div class="columns is-multiline">
+							<div class="column">
+								<a href="#" class="card-footer-item">Delete</a>
+							</div>
+							<div class="column">
+								<a class="card-footer-item" onclick="updateMachine(this)">Update</a>
+							</div>
+                            <div class="column">
+                                <a class="card-footer-item" onclick="downloadMachineImage(this)">Download</a>
+                            </div>
+						</div>
+					</footer>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal" id="add-new-image-setup-modal">
+		<div class="modal-background"></div>
+		<div class="modal-card">
+			<header class="modal-card-head has-background-primary">
+				<p class="modal-card-title has-text-white">Add Image to Setup</p>
+				<button class="delete" aria-label="close"></button>
+			</header>
+			<section class="modal-card-body">
+				<div class="tabs is-centered" id="image-list-tabs">
+					<ul>
+						<li class="is-active" onclick="switchTab(this)" data-type="base">
+							<a>
+								<span class="icon is-small"><i class="fas fa-atom" aria-hidden="true"></i></span>
+								Base
+							</a>
+						</li>
+						<li onclick="switchTab(this)" data-type="system">
+							<a>
+								<span class="icon is-small"><i class="fas fa-desktop" aria-hidden="true"></i></span>
+								System
+							</a>
+						</li>
+						<li onclick="switchTab(this)" data-type="user">
+							<a>
+								<span class="icon is-small"><i class="fas fa-circle-user" aria-hidden="true"></i></span>
+								User
+							</a>
+						</li>
+						<li onclick="switchTab(this)" data-type="temporal">
+							<a>
+								<span class="icon is-small"><i class="fas fa-archive" aria-hidden="true"></i></span>
+								Temporal
+							</a>
+						</li>
+						<li onclick="switchTab(this)" data-type="temporary">
+							<a>
+								<span class="icon is-small"><i class="fas fa-hourglass" aria-hidden="true"></i></span>
+								Temporary
+							</a>
+						</li>
+					</ul>
+				</div>
+				
+				<div class="image-add-items" id="base-image-list">
+				</div>
+
+				<div class="image-add-items" id="system-image-list">
+				</div>
+
+				<div class="image-add-items" id="user-image-list">
+				</div>
+
+				<div class="image-add-items" id="temporal-image-list">
+				</div>
+
+				<div class="image-add-items" id="temporary-image-list">
+				</div>
+			</section>
+		</div>
+	</div>
+
+	<div class="modal" id="select-machine-modal">
+		<div class="modal-background"></div>
+		<div class="modal-card">
+			<header class="modal-card-head has-background-info">
+				<p class="modal-card-title has-text-white">Machines</p>
+				<button class="delete" aria-label="close"></button>
+			</header>
+			<section class="modal-card-body" id="select-machine-list">
+				<div class="machine-modal-item">
+					<div class="block is-fullwidth">
+						<span onclick="callbackSelectMachine(this) image-list-label">Machine</span>
+					</div>
+					<hr>
+				</div>
+				<div class="machine-modal-item">
+					<div class="block is-fullwidth">
+						<span onclick="callbackSelectMachine(this) image-list-label">Machine 2</span>
+					</div>
+					<hr>
+				</div>
+				<div class="machine-modal-item">
+					<div class="block is-fullwidth">
+						<span onclick="callbackSelectMachine(this) image-list-label">foobar</span>
+					</div>
+				</div>
+			</section>
+			<footer class="modal-card-foot">
+				<button class="button is-success" onclick="addMachine()">Save changes</button>
+				<button class="button">Cancel</button>
+			</footer>
+		</div>
+	</div>
+
+	<a class="button is-floating has-background-warning" data-target="add-new-image-setups-modal"
+	   onclick="addImageSetup();"
+	   class="add-new-image-setups-modal-trigger">
+		<span class="icon is-warn">
+			<i class="fas fa-sd-card"></i>
+		</span>
+	</a>
+</div>

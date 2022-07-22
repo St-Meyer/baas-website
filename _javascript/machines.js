@@ -1,6 +1,6 @@
 function getNewMachine(machine) {
 	const newMachine = `
-		<div class="column is-one-third">
+		<div class="column is-one-quarter">
 			<div class="card">
 				<div class="card-content">
 					<div class="title" autocorrect=off autocomplete=off contentEditable=true id="#machine-id">${machine.Name}</div>
@@ -44,7 +44,7 @@ function getMachines() {
 
 	sendMessage(`/machines`, "GET", data => {
 		machines.replaceChildren(...data.map(getNewMachine));
-	})
+	});
 }
 
 function updateMachine(element) {

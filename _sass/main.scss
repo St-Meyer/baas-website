@@ -67,8 +67,18 @@ body {
 	min-height: 100vh;
 	flex-direction: column;
 }
-html {
-	
+
+.image-box-table {
+	margin-bottom: 0.5rem;
+}
+
+.name-list {
+	margin-top: 0px !important;
+	margin-bottom: 0.5rem;
+}
+
+.setup-image-box-select {
+	margin-bottom: 0px !important;
 }
 
 .card-content .title {
@@ -84,11 +94,49 @@ html {
 	margin-bottom: 0px !important;
 }
 
-.content .modal-field {
+.image-list-icon {
+	float: right;
+	margin-right: 2%;
+}
+
+.image-add-item {
+	margin: 0px;
+	padding-top: 1.5rem;
+}
+
+.image-list-label {
+	margin-left: 2%;
+}
+
+.image-add-items {
+	margin-bottom: 8px;
+}
+
+
+#image-list-tabs {
+	margin-bottom: 0px;
+}
+
+.image-add-items>div:nth-child(even) {
+	background-color: $warning;
+}
+
+.image-add-items>div:nth-child(even):hover {
+	background-color: hsl(44deg, 100%, 68%);
+}
+
+.image-add-items>div:nth-child(odd):hover {
+	background-color: $white-ter;
+}
+.image-add-item>hr {
+	margin: 0px;
+}
+
+#image-list-tabs .modal-field {
 	padding-bottom: 1rem !important;
 }
 
-.modal-card-body span {
+.modal-card-body span:not(.icon) {
 	margin-top: 0.5rem !important;
 	margin-bottom: 0px !important;
 }
