@@ -144,3 +144,7 @@ body {
 .modal-card-body input:not(:first-chil) {
 	margin-top: 0.5rem !important;
 }
+
+#front-page>.is-4:not(:first-child) {
+	margin-top: 1.5rem;
+}

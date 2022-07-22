@@ -89,6 +89,7 @@ function getImages() {
 	let images = document.getElementById("images-list");
 	
 	sendMessage(`/user/${username}/images`, "GET", (data) => {
+		console.log(data);
 		// Delete all the images that are already there
 		images.replaceChildren(...data.map(getNewImage));
 	});
