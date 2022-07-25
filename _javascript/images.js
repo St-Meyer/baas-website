@@ -74,7 +74,7 @@ function addImage() {
 	let input = confirm("Are you sure?");
 	if (! input) return;
 	
-	sendMessageData(`/user/${username}/image`, "POST", image, data => {
+	sendMessageData(`/image`, "POST", image, data => {
 		$("#images-list").append(getNewImage(data));
 	});
 }
@@ -86,7 +86,6 @@ function getImages() {
 	let images = document.getElementById("images-list");
 	
 	sendMessage(`/user/${username}/images`, "GET", (data) => {
-		console.log(data);
 		// Delete all the images that are already there
 		images.replaceChildren(...data.map(getNewImage));
 	});
@@ -111,7 +110,7 @@ function downloadImage(imageCard) {
 	let link = document.createElement("a");
 	
     link.download = `${image.UUID}-${image.Version}.img`;
-    link.href = `http://localhost:4848/${username}/image/${image.UUID}/${image.Version}`;
+    link.href = `http://localhost:4848/image/${image.UUID}/${image.Version}`;
 	link.target = "_self";
 	document.body.appendChild(link);
     link.click();
@@ -135,7 +134,7 @@ function uploadImage(imageCard) {
 			$.ajax({
 				type: "POST",
 				enctype: 'multipart/form-data',
-				url: `http://localhost:4848/${username}/image/${image.UUID}`,
+				url: `http://localhost:4848/image/${image.UUID}`,
 				data: formData,
 				processData: false,
 				contentType: false,
@@ -146,6 +145,7 @@ function uploadImage(imageCard) {
 				crossDomain: true,
 				timeout: -1,
 				success: x => {
+					console.log(x)
 					// Get the version from the human-readable string
 					let version = x.slice(29);
 					let content = findParent(imageCard, "card-content");
