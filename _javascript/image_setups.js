@@ -87,7 +87,7 @@ function getImageSetup (imageSetup) {
 				<label class="label">UUID</label>
 				<span id="image-setup-uuid" class="has-text-dark modal-field">${imageSetup.UUID}</span>
                 <label class="label">User</label>
-				<span id="image-setup-username" class="has-text-dark modal-field">${imageSetup.User}</span>
+				<span id="image-setup-username" class="has-text-dark modal-field">${imageSetup.Username}</span>
                       ${getImageBlock(imageSetup.Images)}
 			</div>
 			<footer class="card-footer">

@@ -2,8 +2,8 @@ function getVersion(versions) {
 	return versions
 		.slice(0, versions.length-1)
 		.map((version) =>
-			`<a href="#" onclick="activateDropdownItem(event, this);" class="dropdown-item">${version.Version}</a> `)
-	    .concat(`<a href="#" onclick="activateDropdownItem(event, this);" class="dropdown-item is-active">${versions[versions.length-1].Version}</a>`);
+			`<a onclick="activateDropdownItem(event, this);" class="dropdown-item">${version.Version}</a> `)
+	    .concat(`<a onclick="activateDropdownItem(event, this);" class="dropdown-item is-active">${versions[versions.length-1].Version}</a>`);
 }
 
 function getNewImage(image) {
@@ -11,7 +11,7 @@ function getNewImage(image) {
 <div class="column is-one-quarter">
   <div class="card image-card">
     <div class="card-content">
-      <p class="title" id="#image-id">${image.Name}</p>
+      <p class="title" id="#image-id" autocorrect=off autocomplete=off contenteditable=true>${image.Name}</p>
       <hr>
 	  <div class="content" onclick="toggleDropdown(event, this);">
   	    <label class="label">UUID</label>
@@ -45,13 +45,16 @@ function getNewImage(image) {
       <footer class="card-footer">
         <div class="columns is-multiline">
           <div class="column">
-             <a href="#" class="card-footer-item" onclick="downloadImage(this);">Download</a>
+             <a class="card-footer-item" onclick="downloadImage(this);">Download</a>
           </div>
           <div class="column">
-		     <a href="#" class="card-footer-item" onclick="deleteImage(this);">Delete</a>
+             <a class="card-footer-item" onclick="updateImage(this);">Update</a>
           </div>
           <div class="column">
-             <a href="#" class="card-footer-item" onclick="uploadImage(this);">Upload</a>
+		     <a class="card-footer-item" onclick="deleteImage(this);">Delete</a>
+          </div>
+          <div class="column">
+             <a class="card-footer-item" onclick="uploadImage(this);">Upload</a>
           </div>
         </div>
       </footer>
@@ -68,7 +71,8 @@ function addImage() {
 		ImageFileType: getOption("#image-filetype-select"),
 		Type: getOption("#image-type-select"),
 		CheckSum: "",
-		Versions: []
+		Versions: [],
+		Username: username,
 	};
 
 	let input = confirm("Are you sure?");
@@ -79,8 +83,14 @@ function addImage() {
 	});
 }
 
-function deleteImage() {
-
+function deleteImage(imageCard) {
+	let image = getImageAndVersion(imageCard);
+	let uuid = image.UUID;
+	findParent(imageCard, "is-one-quarter").remove();
+	
+	sendMessage(`/image/${uuid}`, "DELETE", data => {
+		
+	});
 }
 function getImages() {
 	let images = document.getElementById("images-list");
@@ -117,6 +127,13 @@ function downloadImage(imageCard) {
 	link.remove();
 }
 
+function updateImage(imageCard) {
+	let image = getImageAndVersion(imageCard);
+	let cardContent = findParent(imageCard, "card-content")
+	let newImage = {"Name": findChild(cardContent, "title").textContent,
+					"UUID": image.UUID};
+	sendMessageData(`/image/${image.UUID}`, "PUT", newImage, data => console.log(data));
+}
 function uploadImage(imageCard) {
 	let image = getImageAndVersion(imageCard);
 	
