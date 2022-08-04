@@ -134,6 +134,7 @@ function updateImage(imageCard) {
 					"UUID": image.UUID};
 	sendMessageData(`/image/${image.UUID}`, "PUT", newImage, data => console.log(data));
 }
+
 function uploadImage(imageCard) {
 	let image = getImageAndVersion(imageCard);
 	
@@ -145,13 +146,15 @@ function uploadImage(imageCard) {
 			const formData = new FormData();
 
 			// Why????
-			formData.append("newVersion", "true");
 			formData.append("file", upload.files[0]);
 
 			$.ajax({
 				type: "POST",
 				enctype: 'multipart/form-data',
 				url: `http://localhost:4848/image/${image.UUID}`,
+				headers: {
+					"X-BAAS-NewVersion": "True"
+				},
 				data: formData,
 				processData: false,
 				contentType: false,

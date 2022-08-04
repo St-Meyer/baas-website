@@ -99,7 +99,7 @@ function getImageSetup (imageSetup) {
                         <a class="card-footer-item" onclick="launchImageSetup(this)">Launch</a>
                     </div>
 					<div class="column">
-						<a href="#" class="card-footer-item">Delete</a>
+						<a class="card-footer-item" onclick="deleteImageSetup(this)>Delete</a>
 					</div>
 					<div class="column">
 						<a class="card-footer-item" onclick="updateImageSetup(this)">Update</a>
@@ -184,17 +184,11 @@ function launchImageSetup(event) {
 	let imageSetupUuid = findChild(findChild(cardContent, "content"), "image-setup-uuid").textContent;
 
 	sendMessage(`/machines`, "GET", data => {
-		console.log(data);
 		let machineList = document.getElementById("select-machine-list");
 		machineList.replaceChildren(...data.map(machine => selectMachineModelItem(imageSetupUuid, machine)));
 		findChild(machineList.lastChild, "block").children[1].remove();
 		openModal(document.getElementById("select-machine-modal"));
 	});
-	
-	
-	// sendMessageData(`/machine/80:86:f2:8b:aa:e7/boot`, "POST", {"SetupUUID": imageSetupUuid}, data => {
-	// 	console.log(data);
-	// });
 }
 
 function getImageAddItem(image) {
@@ -216,10 +210,10 @@ function addImageToSetup(event) {
 		.dataset.uuid;
 	let imageSetup = {
 		"Uuid": imageUuid,
-		"Version": 0
+		"Version": 1
 	};
 
-	sendMessageData(`/user/${username}/image_setup/${imageSetupUuid}`, "POST", imageSetup, data => {
+	sendMessageData(`/user/${username}/image_setup/${imageSetupUuid}/images`, "POST", imageSetup, data => {
 		// Create a new imageBlock, find the old one and replace it
 		let image = Array.from(document.getElementsByClassName("image-setup-name"))
 			.filter(item => item.textContent === data.Name)[0];
@@ -275,4 +269,15 @@ function switchTab(event) {
 	// Hide all lists, but show the selected one.
 	$(".image-add-items").forEach(list => list.hidden = true);
 	$("#" + event.dataset.type + "-image-list")[0].hidden = false;
+}
+
+function deleteImageSetup(event) {
+	let imageSetupUuid = document.getElementById('add-new-image-setup-modal')
+		.dataset.target;	
+	let imageUuid = findChild(findParent(event, "image-add-list-block"), "image-list-label")
+		.dataset.uuid;
+	
+
+	sendMessage(`/user/${username}/image_setup/${imageSetupUuid}`, "DELETE",d, data => {
+	});
 }

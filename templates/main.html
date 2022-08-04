@@ -4,4 +4,21 @@
   {% include 'images.html' %}
   {% include 'machines.html' ignore missing %}
   {% include 'image_setups.html' ignore missing %}
+
+  <div class="modal" id="error-modal">
+		<div class="modal-background"></div>
+		<div class="modal-card">
+			<header class="modal-card-head has-background-danger">
+				<p class="modal-card-title has-text-white">Add Image to Setup</p>
+				<button class="delete" aria-label="close"></button>
+			</header>
+			<section class="modal-card-body">
+				<span id="error-modal-text">Hello</span>
+			</section>
+			<footer class="modal-card-foot">
+				<button class="button is-success">Okay</button>
+			</footer>
+		</div>
+  </div>
+
 </main>

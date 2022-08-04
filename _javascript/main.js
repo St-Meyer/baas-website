@@ -80,7 +80,11 @@ function sendMessageData(uri, type, data, callback) {
 		},
 		crossDomain: true,
 		success: callback,
-		error: (xhr, type) => { console.log(xhr.response); }
+		error: (xhr, type) => {
+			openModal(document.getElementById("error-modal"));
+			console.log(xhr);
+			document.getElementById("error-modal-text").textContent = xhr.responseText;
+		}
 	});
 }
 
