@@ -4,10 +4,20 @@ BAAS Website
 A simple web frontend for the BAAS project API. Currently it is only
 meant for debugging purposes.
 
+Requirements:
+- flask
+- npm
+- python3
+- Fontawesome For The Web in static/fontawesome
+
 ```bash
 npm install
 npm start
+python app.py
 ```
+
+Login into Github using: http://localhost:9090 
+After which you can access the web app on http://localhost:9090/app
 
 LICENSE
 ======
