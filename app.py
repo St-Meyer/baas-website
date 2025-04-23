@@ -12,12 +12,20 @@ app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 app.secret_key = os.urandom(24)
 
+BAAS_API = os.getenv('BAAS_API', 'http://localhost:4848')
+
+
 CLIENT_ID = os.getenv('CLIENT_ID')
 CLIENT_SECRET = os.getenv('CLIENT_SECRET')
 AUTHORIZATION_BASE_URL = 'https://github.com/login/oauth/authorize'
 TOKEN_URL = 'https://github.com/login/oauth/access_token'
 USER_API_URL = 'https://api.github.com/user'
-CORS(app, origins=["http://localhost:9090", "http://localhost:4848"], supports_credentials=True)
+CORS(app, origins=[
+    "http://localhost:9090", 
+    "http://localhost:4848",
+    "http://127.0.0.1:9090",
+    "http://127.0.0.1:4848",
+    ], supports_credentials=True)
 
 @app.route("/")
 def index():
@@ -82,5 +90,5 @@ def home():
     return render_template('index.html')
 
 if __name__ == '__main__':
-    app.run(debug=True, port=9090)
+    app.run(debug=False, port=9090)
 
