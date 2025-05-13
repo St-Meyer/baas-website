@@ -31,9 +31,9 @@ $fa-font-path: "../fontawesome/webfonts";
 
 @import "../node_modules/bulma/bulma";
 @import "../node_modules/bulma-fab-button/src/bulma-fab-button.sass";
-@import "../static/fontawesome/scss/fontawesome.scss";
-@import "../static/fontawesome/scss/brands.scss";
-@import "../static/fontawesome/scss/solid.scss";
+@import "../static/fontawesome/scss/fontawesome";
+@import "../static/fontawesome/scss/brands";
+@import "../static/fontawesome/scss/solid";
 
 #login-screen {
 	background-color: $red;

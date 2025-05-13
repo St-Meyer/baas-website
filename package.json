@@ -5,10 +5,11 @@
   "author": "Valentijn van de Beek <v.d.vandebeek@student.tudelft.nl>",
   "license": "BSD-3",
   "devDependencies": {
+    "@babel/cli": "^7.27.1",
+    "@babel/core": "^7.27.1",
+    "@babel/preset-env": "^7.27.1",
     "autoprefixer": "^10.4.7",
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-es2015-ie": "^6.7.0",
+    "babel-preset-env": "^0.0.0",
     "bulma": "^0.9.4",
     "npm-run-all": "^4.1.5",
     "postcss-cli": "^9.1.0",
@@ -16,6 +17,7 @@
     "typescript": "^4.7.4"
   },
   "scripts": {
+    "build": "babel src --out-dir dist",
     "css-deploy": "npm run css-build && npm run css-postcss",
     "css-build": "sass --no-source-map _sass/main.scss:static/css/main.css",
     "css-postcss": "postcss --use autoprefixer --output static/css/main.css static/css/main.css",
@@ -26,6 +28,7 @@
     "start": "npm-run-all --parallel css-watch js-watch"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.7.2",
     "bulma-fab-button": "^1.1.0"
   }
 }
